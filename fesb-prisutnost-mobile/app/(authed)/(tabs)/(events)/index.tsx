@@ -22,7 +22,6 @@ export default function EventsScreen() {
   const [events, setEvents] = useState<Event[]>([]);
 
   function onGoToEventPage(id: number) {
-    console.log(user?.role);
     if (user?.role === UserRole.Manager) {
       router.push(`/(events)/event/${id}`);
     }
@@ -31,10 +30,10 @@ export default function EventsScreen() {
   async function buyTicket(id: number) {
     try {
       await ticketService.createOne(id);
-      Alert.alert("Success", "Ticket purchased successfully");
+      Alert.alert("Success", "QR kod uspješno generiran");
       fetchEvents();
     } catch (error) {
-      Alert.alert("Error", "Failed to buy ticket");
+      Alert.alert("Error", "Neuspjelo generiranje QR koda");
     }
   }
 
@@ -58,8 +57,7 @@ export default function EventsScreen() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: "Events",
-      headerRight: user?.role === UserRole.Manager ? headerRight : null,
+      headerTitle: "Predavanja",
     });
   }, [navigation, user]);
 
@@ -67,8 +65,9 @@ export default function EventsScreen() {
     <VStack flex={1} p={20} pb={0} gap={20}>
       <HStack alignItems="center" justifyContent="space-between">
         <Text fontSize={18} bold>
-          {events.length} Events
+          {events.length} Predavanja
         </Text>
+        {user?.role === UserRole.Manager && headerRight()}
       </HStack>
 
       <FlatList
@@ -111,10 +110,10 @@ export default function EventsScreen() {
 
             <HStack justifyContent="space-between">
               <Text bold fontSize={16} color="gray">
-                Sold: {event.totalTicketsPurchased}
+                Generirano: {event.totalTicketsPurchased}
               </Text>
               <Text bold fontSize={16} color="green">
-                Entered: {event.totalTicketsEntered}
+                Validirano: {event.totalTicketsEntered}
               </Text>
             </HStack>
 
@@ -125,7 +124,7 @@ export default function EventsScreen() {
                   disabled={isLoading}
                   onPress={() => buyTicket(event.id)}
                 >
-                  Buy Ticket
+                  Generiraj QR kod
                 </Button>
               </VStack>
             )}
@@ -140,12 +139,15 @@ export default function EventsScreen() {
   );
 }
 
-const headerRight = () => {
+function headerRight() {
   return (
-    <TabBarIcon
-      size={32}
-      name="add-circle-outline"
-      onPress={() => router.push("/(events)/new")}
-    />
+    <TouchableOpacity
+      onPress={() => {
+        console.log("pressed");
+        router.push(`/(events)/new`);
+      }}
+    >
+      <TabBarIcon size={32} name="add-circle-outline" />
+    </TouchableOpacity>
   );
-};
+}
