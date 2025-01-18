@@ -34,7 +34,7 @@ export const AndroidDateTimePicker = ({ onChange, currentDate }: DateTimePickerP
   return (
     <HStack p={10} alignItems='center' justifyContent='space-between'>
       <Text>{ currentDate.toLocaleDateString() }</Text>
-      <Button variant='outlined' onPress={showDatepicker}>Open Calendar</Button>
+      <Button variant='outlined' onPress={showDatepicker}>Odaberi</Button>
     </HStack>
   );
 };

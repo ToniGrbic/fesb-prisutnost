@@ -41,7 +41,7 @@ export default function NewEvent() {
     <VStack m={ 20 } flex={ 1 } gap={ 30 }>
 
       <VStack gap={ 5 }>
-        <Text ml={ 10 } fontSize={ 14 } color="gray">Name</Text>
+        <Text ml={ 10 } fontSize={ 14 } color="gray">Ime predavanja</Text>
         <Input
           value={ name }
           onChangeText={ setName }
@@ -53,7 +53,7 @@ export default function NewEvent() {
       </VStack>
 
       <VStack gap={ 5 }>
-        <Text ml={ 10 } fontSize={ 14 } color="gray">Location</Text>
+        <Text ml={ 10 } fontSize={ 14 } color="gray">Lokacija</Text>
         <Input
           value={ location }
           onChangeText={ setLocation }
@@ -65,7 +65,7 @@ export default function NewEvent() {
       </VStack>
 
       <VStack gap={ 5 }>
-        <Text ml={ 10 } fontSize={ 14 } color="gray">Date</Text>
+        <Text ml={ 10 } fontSize={ 14 } color="gray">Datum</Text>
         <DateTimePicker onChange={onChangeDate} currentDate={date}/>
       </VStack>
 
@@ -75,7 +75,7 @@ export default function NewEvent() {
         disabled={ isSubmitting }
         onPress={ onSubmit }
       >
-        Save
+        Spremi
       </Button>
 
     </VStack>

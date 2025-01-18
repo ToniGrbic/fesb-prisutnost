@@ -19,8 +19,8 @@ export default function ScanTicketScreen() {
   if (!permission.granted) {
     return (
       <VStack gap={20} flex={1} justifyContent='center' alignItems='center'>
-        <Text>Camera access is required to scan tickets.</Text>
-        <Button onPress={requestPermission}>Allow Camera Access</Button>
+        <Text>Potreban je pristup kameri za skeniranje</Text>
+        <Button onPress={requestPermission}>Dopusti pristup kameri</Button>
       </VStack>
     );
   }

@@ -13,7 +13,7 @@ export default function TabLayout() {
     {
       showFor: [UserRole.Attendee, UserRole.Manager],
       name: "(events)",
-      displayName: "Events",
+      displayName: "Predavanja",
       icon: "calendar",
       options: {
         headerShown: false,
@@ -22,7 +22,7 @@ export default function TabLayout() {
     {
       showFor: [UserRole.Attendee],
       name: "(tickets)",
-      displayName: "My Tickets",
+      displayName: "Moji QR kodovi",
       icon: "ticket",
       options: {
         headerShown: false,
@@ -31,7 +31,7 @@ export default function TabLayout() {
     {
       showFor: [UserRole.Manager],
       name: "scan-ticket",
-      displayName: "Scan Ticket",
+      displayName: "Skeniraj QR kod",
       icon: "scan",
       options: {
         headerShown: true,
@@ -40,7 +40,7 @@ export default function TabLayout() {
     {
       showFor: [UserRole.Attendee, UserRole.Manager],
       name: "settings",
-      displayName: "Settings",
+      displayName: "Postavke",
       icon: "cog",
       options: {
         headerShown: true,

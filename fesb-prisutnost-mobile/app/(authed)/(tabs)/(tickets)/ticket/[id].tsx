@@ -18,7 +18,7 @@ export default function TicketDetailScreen() {
     try {
       const { data } = await ticketService.getOne(Number(id));
       setTicket(data.ticket);
-      setQrcode(data.qrcode);
+      setQrcode(data?.qrcode);
     } catch (error) {
       router.back();
     }

@@ -33,14 +33,14 @@ export default function TicketScreen() {
   useFocusEffect(useCallback(() => { fetchTickets(); }, []));
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: "Tickets" });
+    navigation.setOptions({ headerTitle: "QR kodovi" });
   }, [navigation]);
 
   return (
     <VStack flex={1} p={20} pb={0} gap={20}>
 
       <HStack alignItems="center" justifyContent="space-between">
-        <Text fontSize={18} bold>{tickets.length} Tickets</Text>
+        <Text fontSize={18} bold>{tickets.length} kodova</Text>
       </HStack>
 
       <FlatList

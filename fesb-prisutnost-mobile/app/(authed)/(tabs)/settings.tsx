@@ -7,7 +7,7 @@ export default function SettingsScreen() {
 
   return (
     <VStack flex={ 1 } m={ 20 }>
-      <Button onPress={ logout }>Logout</Button>
+      <Button onPress={ logout }>Odjava</Button>
     </VStack>
   );
 }
