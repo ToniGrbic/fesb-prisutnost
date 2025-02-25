@@ -118,7 +118,7 @@ export default function EventDetailsScreen() {
         disabled={isSubmitting}
         onPress={onSubmitChanges}
       >
-        Save Changes
+        Spremi promjene
       </Button>
 
     </VStack>
