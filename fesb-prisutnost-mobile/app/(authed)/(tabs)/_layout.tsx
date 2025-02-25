@@ -21,16 +21,16 @@ export default function TabLayout() {
     },
     {
       showFor: [UserRole.Attendee],
-      name: "(tickets)",
+      name: "(attendances)",
       displayName: "Moji QR kodovi",
-      icon: "ticket",
+      icon: "qr-code",
       options: {
         headerShown: false,
       },
     },
     {
       showFor: [UserRole.Manager],
-      name: "scan-ticket",
+      name: "scan-attendance",
       displayName: "Skeniraj QR kod",
       icon: "scan",
       options: {
