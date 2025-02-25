@@ -34,7 +34,7 @@ export default function NewEvent() {
   }
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: "New Event" });
+    navigation.setOptions({ headerTitle: "Novo predavanje" });
   }, []);
 
   return (
