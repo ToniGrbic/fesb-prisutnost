@@ -7,9 +7,9 @@ export type Event = {
   id: number;
   name: string;
   location: string;
-  totalTicketsPurchased: number;
-  totalTicketsEntered: number;
+  totalAttendancesPurchased: number;
+  totalAttendancesEntered: number;
   date: string;
   createdAt: string;
   updatedAt: string;
-}
+};

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Ticket struct {
+type Attendance struct {
 	ID        uint      `json:"id" gorm:"primarykey"`
 	EventID   uint      `json:"eventId"`
 	UserID    uint      `json:"userId" gorm:"foreignkey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
@@ -15,14 +15,14 @@ type Ticket struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 }
 
-type TicketRepository interface {
-	GetMany(ctx context.Context, userId uint) ([]*Ticket, error)
-	GetOne(ctx context.Context, userId uint, ticketId uint) (*Ticket, error)
-	CreateOne(ctx context.Context, userId uint, ticket *Ticket) (*Ticket, error)
-	UpdateOne(ctx context.Context, userId uint, ticketId uint, updateData map[string]interface{}) (*Ticket, error)
+type AttendanceRepository interface {
+	GetMany(ctx context.Context, userId uint) ([]*Attendance, error)
+	GetOne(ctx context.Context, userId uint, attendanceId uint) (*Attendance, error)
+	CreateOne(ctx context.Context, userId uint, attendance *Attendance) (*Attendance, error)
+	UpdateOne(ctx context.Context, userId uint, attendanceId uint, updateData map[string]interface{}) (*Attendance, error)
 }
 
-type ValidateTicket struct {
-	TicketId uint `json:"ticketId"`
+type ValidateAttendance struct {
+	AttendanceId uint `json:"attendanceId"`
 	OwnerId  uint `json:"ownerId"`
 }

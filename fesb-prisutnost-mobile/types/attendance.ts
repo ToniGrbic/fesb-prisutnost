@@ -1,10 +1,10 @@
 import { ApiResponse } from "./api";
 import { Event } from "./event";
 
-export type TicketResponse = ApiResponse<Ticket>;
-export type TicketListResponse = ApiResponse<Ticket[]>;
+export type AttendanceResponse = ApiResponse<Attendance>;
+export type AttendanceListResponse = ApiResponse<Attendance[]>;
 
-export type Ticket = {
+export type Attendance = {
   id: number;
   eventId: number;
   userId: number;
@@ -12,4 +12,4 @@ export type Ticket = {
   entered: boolean;
   createdAt: string;
   updatedAt: string;
-}
+};

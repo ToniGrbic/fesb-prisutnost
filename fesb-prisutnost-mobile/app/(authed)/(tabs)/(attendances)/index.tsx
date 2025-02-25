@@ -1,36 +1,40 @@
 import { HStack } from "@/components/HStack";
 import { Text } from "@/components/Text";
 import { VStack } from "@/components/VStack";
-import { ticketService } from "@/services/tickets";
-import { Ticket } from "@/types/ticket";
+import { attendanceService } from "@/services/attendances";
+import { Attendance } from "@/types/attendance";
 import { useFocusEffect } from "@react-navigation/native";
 import { router, useNavigation } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, FlatList, TouchableOpacity } from "react-native";
 
-export default function TicketScreen() {
+export default function AttendanceScreen() {
   const navigation = useNavigation();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [attendances, setAttendances] = useState<Attendance[]>([]);
 
-  function onGoToTicketPage(id: number) {
-    router.push(`/(tickets)/ticket/${id}`);
+  function onGoToAttendancePage(id: number) {
+    router.push(`/(attendances)/attendance/${id}`);
   }
 
-  async function fetchTickets() {
+  async function fetchAttendances() {
     try {
       setIsLoading(true);
-      const response = await ticketService.getAll();
-      setTickets(response.data);
+      const response = await attendanceService.getAll();
+      setAttendances(response.data);
     } catch (error) {
-      Alert.alert("Error", "Failed to fetch tickets");
+      Alert.alert("Error", "Failed to fetch attendances");
     } finally {
       setIsLoading(false);
     }
   }
 
-  useFocusEffect(useCallback(() => { fetchTickets(); }, []));
+  useFocusEffect(
+    useCallback(() => {
+      fetchAttendances();
+    }, [])
+  );
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: "QR kodovi" });
@@ -38,23 +42,27 @@ export default function TicketScreen() {
 
   return (
     <VStack flex={1} p={20} pb={0} gap={20}>
-
       <HStack alignItems="center" justifyContent="space-between">
-        <Text fontSize={18} bold>{tickets.length} kodova</Text>
+        <Text fontSize={18} bold>
+          {attendances.length} kodova
+        </Text>
       </HStack>
 
       <FlatList
         keyExtractor={({ id }) => id.toString()}
-        data={tickets}
-        onRefresh={fetchTickets}
+        data={attendances}
+        onRefresh={fetchAttendances}
         refreshing={isLoading}
-        renderItem={({ item: ticket }) => (
-          <TouchableOpacity disabled={ticket.entered} onPress={() => onGoToTicketPage(ticket.id)}>
+        renderItem={({ item: attendance }) => (
+          <TouchableOpacity
+            disabled={attendance.entered}
+            onPress={() => onGoToAttendancePage(attendance.id)}
+          >
             <VStack
               gap={20}
               h={120}
-              key={ticket.id}
-              style={{ opacity: ticket.entered ? 0.5 : 1 }}
+              key={attendance.id}
+              style={{ opacity: attendance.entered ? 0.5 : 1 }}
             >
               <HStack>
                 <VStack
@@ -67,15 +75,24 @@ export default function TicketScreen() {
                     borderTopLeftRadius: 20,
                     borderBottomLeftRadius: 20,
                     borderTopRightRadius: 5,
-                    borderBottomRightRadius: 5
+                    borderBottomRightRadius: 5,
                   }}
                 >
                   <HStack alignItems="center">
-                    <Text fontSize={22} bold>{ticket.event.name}</Text>
-                    <Text fontSize={22} bold> | </Text>
-                    <Text fontSize={16} bold>{ticket.event.location}</Text>
+                    <Text fontSize={22} bold>
+                      {attendance.event.name}
+                    </Text>
+                    <Text fontSize={22} bold>
+                      {" "}
+                      |{" "}
+                    </Text>
+                    <Text fontSize={16} bold>
+                      {attendance.event.location}
+                    </Text>
                   </HStack>
-                  <Text fontSize={12}>{new Date(ticket.event.date).toLocaleString()}</Text>
+                  <Text fontSize={12}>
+                    {new Date(attendance.event.date).toLocaleString()}
+                  </Text>
                 </VStack>
 
                 <VStack
@@ -85,7 +102,7 @@ export default function TicketScreen() {
                     alignSelf: "center",
                     borderColor: "lightgray",
                     borderWidth: 2,
-                    borderStyle: 'dashed',
+                    borderStyle: "dashed",
                   }}
                 />
 
@@ -102,20 +119,21 @@ export default function TicketScreen() {
                     borderBottomLeftRadius: 5,
                   }}
                 >
-                  <Text fontSize={16} bold>{ticket.entered ? "Used" : "Available"}</Text>
-                  {ticket.entered &&
-                    <Text mt={12} fontSize={10}>{new Date(ticket.updatedAt).toLocaleString()}</Text>
-                  }
+                  <Text fontSize={16} bold>
+                    {attendance.entered ? "Used" : "Available"}
+                  </Text>
+                  {attendance.entered && (
+                    <Text mt={12} fontSize={10}>
+                      {new Date(attendance.updatedAt).toLocaleString()}
+                    </Text>
+                  )}
                 </VStack>
               </HStack>
-
             </VStack>
           </TouchableOpacity>
         )}
-
         ItemSeparatorComponent={() => <VStack h={20} />}
       />
-
     </VStack>
   );
 }

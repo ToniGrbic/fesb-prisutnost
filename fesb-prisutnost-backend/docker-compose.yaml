@@ -4,8 +4,8 @@ services:
   app:
     tty: true #keep the container running
     restart: always
-    image: ticket-booking
-    container_name: ticket-booking
+    image: attendance-booking
+    container_name: attendance-booking
     build: .
     ports:
       - 8080:8080
@@ -22,7 +22,7 @@ services:
 
   db:
     image: postgres:alpine
-    container_name: ticket-booking-db
+    container_name: attendance-booking-db
     environment:
       - POSTGRES_HOST=${DB_HOST}
       - POSTGRES_DB=${DB_NAME}

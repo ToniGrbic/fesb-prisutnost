@@ -18,7 +18,7 @@ func main() {
 	db := db.Init(envConfig, db.DBMigrator)
 
 	app := fiber.New(fiber.Config{
-		AppName:      "Ticket-Booking",
+		AppName:      "Attendance-Booking",
 		ServerHeader: "Fiber",
 	})
 
@@ -26,7 +26,7 @@ func main() {
 
 	// Repositories
 	eventRepository := repositories.NewEventRepository(db)
-	ticketRepository := repositories.NewTicketRepository(db)
+	attendanceRepository := repositories.NewAttendanceRepository(db)
 	authRepository := repositories.NewAuthRepository(db)
 
 	// Service
@@ -39,7 +39,7 @@ func main() {
 	privateRoutes := server.Use(middlewares.AuthProtected(db))
 
 	handlers.NewEventHandler(privateRoutes.Group("/event"), eventRepository)
-	handlers.NewTicketHandler(privateRoutes.Group("/ticket"), ticketRepository)
+	handlers.NewAttendanceHandler(privateRoutes.Group("/attendance"), attendanceRepository)
 
 	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
 }

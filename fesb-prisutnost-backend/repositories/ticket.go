@@ -7,60 +7,60 @@ import (
 	"gorm.io/gorm"
 )
 
-type TicketRepository struct {
+type AttendanceRepository struct {
 	db *gorm.DB
 }
 
-func (r *TicketRepository) GetMany(ctx context.Context, userId uint) ([]*models.Ticket, error) {
-	tickets := []*models.Ticket{}
+func (r *AttendanceRepository) GetMany(ctx context.Context, userId uint) ([]*models.Attendance, error) {
+	attendances := []*models.Attendance{}
 
-	res := r.db.Model(&models.Ticket{}).Where("user_id = ?", userId).Preload("Event").Order("updated_at desc").Find(&tickets)
-
-	if res.Error != nil {
-		return nil, res.Error
-	}
-
-	return tickets, nil
-}
-
-func (r *TicketRepository) GetOne(ctx context.Context, userId uint, ticketId uint) (*models.Ticket, error) {
-	ticket := &models.Ticket{}
-
-	res := r.db.Model(ticket).Where("id = ?", ticketId).Where("user_id = ?", userId).Preload("Event").First(ticket)
+	res := r.db.Model(&models.Attendance{}).Where("user_id = ?", userId).Preload("Event").Order("updated_at desc").Find(&attendances)
 
 	if res.Error != nil {
 		return nil, res.Error
 	}
 
-	return ticket, nil
+	return attendances, nil
 }
 
-func (r *TicketRepository) CreateOne(ctx context.Context, userId uint, ticket *models.Ticket) (*models.Ticket, error) {
-	ticket.UserID = userId
+func (r *AttendanceRepository) GetOne(ctx context.Context, userId uint, attendanceId uint) (*models.Attendance, error) {
+	attendance := &models.Attendance{}
 
-	res := r.db.Model(ticket).Create(ticket)
+	res := r.db.Model(attendance).Where("id = ?", attendanceId).Where("user_id = ?", userId).Preload("Event").First(attendance)
 
 	if res.Error != nil {
 		return nil, res.Error
 	}
 
-	return r.GetOne(ctx, userId, ticket.ID)
+	return attendance, nil
 }
 
-func (r *TicketRepository) UpdateOne(ctx context.Context, userId uint, ticketId uint, updateData map[string]interface{}) (*models.Ticket, error) {
-	ticket := &models.Ticket{}
+func (r *AttendanceRepository) CreateOne(ctx context.Context, userId uint, attendance *models.Attendance) (*models.Attendance, error) {
+	attendance.UserID = userId
 
-	updateRes := r.db.Model(ticket).Where("id = ?", ticketId).Updates(updateData)
+	res := r.db.Model(attendance).Create(attendance)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return r.GetOne(ctx, userId, attendance.ID)
+}
+
+func (r *AttendanceRepository) UpdateOne(ctx context.Context, userId uint, attendanceId uint, updateData map[string]interface{}) (*models.Attendance, error) {
+	attendance := &models.Attendance{}
+
+	updateRes := r.db.Model(attendance).Where("id = ?", attendanceId).Updates(updateData)
 
 	if updateRes.Error != nil {
 		return nil, updateRes.Error
 	}
 
-	return r.GetOne(ctx, userId, ticketId)
+	return r.GetOne(ctx, userId, attendanceId)
 }
 
-func NewTicketRepository(db *gorm.DB) models.TicketRepository {
-	return &TicketRepository{
+func NewAttendanceRepository(db *gorm.DB) models.AttendanceRepository {
+	return &AttendanceRepository{
 		db: db,
 	}
 }

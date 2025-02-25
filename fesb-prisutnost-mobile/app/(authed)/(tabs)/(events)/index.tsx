@@ -5,8 +5,8 @@ import { Text } from "@/components/Text";
 import { VStack } from "@/components/VStack";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { useAuth } from "@/context/AuthContext";
+import { attendanceService } from "@/services/attendances";
 import { eventService } from "@/services/events";
-import { ticketService } from "@/services/tickets";
 import { Event } from "@/types/event";
 import { UserRole } from "@/types/user";
 import { useFocusEffect } from "@react-navigation/native";
@@ -27,9 +27,9 @@ export default function EventsScreen() {
     }
   }
 
-  async function buyTicket(id: number) {
+  async function buyAttendance(id: number) {
     try {
-      await ticketService.createOne(id);
+      await attendanceService.createOne(id);
       Alert.alert("Success", "QR kod uspješno generiran");
       fetchEvents();
     } catch (error) {
@@ -111,10 +111,10 @@ export default function EventsScreen() {
 
             <HStack justifyContent="space-between">
               <Text bold fontSize={16} color="gray">
-                Generirano: {event.totalTicketsPurchased}
+                Generirano: {event.totalAttendancesPurchased}
               </Text>
               <Text bold fontSize={16} color="green">
-                Validirano: {event.totalTicketsEntered}
+                Validirano: {event.totalAttendancesEntered}
               </Text>
             </HStack>
 
@@ -123,7 +123,7 @@ export default function EventsScreen() {
                 <Button
                   variant="outlined"
                   disabled={isLoading}
-                  onPress={() => buyTicket(event.id)}
+                  onPress={() => buyAttendance(event.id)}
                 >
                   Generiraj QR kod
                 </Button>

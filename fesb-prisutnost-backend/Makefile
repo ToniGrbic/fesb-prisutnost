@@ -3,4 +3,4 @@ start:
 	
 stop:
 	@docker-compose rm -v --force --stop
-	@docker rmi ticket-booking
+	@docker rmi attendance-booking
