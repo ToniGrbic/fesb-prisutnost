@@ -71,6 +71,7 @@ export default function EventsScreen() {
       </HStack>
 
       <FlatList
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         data={events}
         onRefresh={fetchEvents}
